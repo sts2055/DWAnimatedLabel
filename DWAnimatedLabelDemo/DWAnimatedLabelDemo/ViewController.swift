@@ -52,7 +52,7 @@ class ViewController: UIViewController {
         let label = DWAnimatedLabel(frame: CGRect(x: 20, y: 44, width: UIScreen.main.bounds.size.width, height: 100))
         label.text = "LOADING"
         label.font = UIFont.systemFont(ofSize: 70, weight: .bold)
-        label.animationType = .wave
+        label.animationType = .fade
         label.placeHolderColor = .gray
         label.backgroundColor = .black
         label.textColor = . white

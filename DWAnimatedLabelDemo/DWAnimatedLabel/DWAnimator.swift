@@ -75,7 +75,7 @@ extension DWAnimator {
     private func setup() {
         _displayLink = CADisplayLink(target: self, selector: #selector(update))
         _displayLink?.isPaused = true
-        _displayLink?.add(to: RunLoop.main, forMode: .commonModes)
+        _displayLink?.add(to: RunLoop.main, forMode: RunLoop.Mode.common)
     }
     
     private func setupAnimatedText(from labelText: String?) {
@@ -199,7 +199,7 @@ extension DWAnimator {
                 return nil
             }
             for index in 0..<attributedString.length {
-                if CharacterSet.whitespacesAndNewlines.contains(attributedString.string[String.Index(encodedOffset: index)].unicodeScalars.first!) {
+                if CharacterSet.whitespacesAndNewlines.contains(attributedString.string[String.Index(utf16Offset: index, in: attributedString.string)].unicodeScalars.first!) {
                     continue
                 }
                 attributedString.enumerateAttribute(.baselineOffset, in: NSRange(location: index, length: 1), options: .longestEffectiveRangeNotRequired) { (value, range, stop) in
@@ -218,7 +218,7 @@ extension DWAnimator {
                 return nil
             }
             for index in 0..<attributedString.length {
-                if CharacterSet.whitespacesAndNewlines.contains(attributedString.string[String.Index(encodedOffset: index)].unicodeScalars.first!) {
+                if CharacterSet.whitespacesAndNewlines.contains(attributedString.string[String.Index(utf16Offset: index, in: attributedString.string)].unicodeScalars.first!) {
                     continue
                 }
                 attributedString.enumerateAttribute(.foregroundColor, in: NSRange(location: index, length: 1), options: .longestEffectiveRangeNotRequired) { (value, range, stop) in
@@ -242,7 +242,7 @@ extension DWAnimator {
                 return nil
             }
             for index in 0..<attributedString.length {
-                if CharacterSet.whitespacesAndNewlines.contains(attributedString.string[String.Index(encodedOffset: index)].unicodeScalars.first!) {
+                if CharacterSet.whitespacesAndNewlines.contains(attributedString.string[String.Index(utf16Offset: index, in: attributedString.string)].unicodeScalars.first!) {
                     continue
                 }
                 attributedString.enumerateAttribute(.foregroundColor, in: NSRange(location: index, length: 1), options: .longestEffectiveRangeNotRequired) { (value, range, stop) in
@@ -263,7 +263,7 @@ extension DWAnimator {
             guard let shapeLayer = _shapeLayer else {
                 return nil
             }
-            _waveHeight! -= Double(label!.bounds.size.height - label!.font.lineHeight) / (60 / Double(_displayLink!.frameInterval))
+            _waveHeight! -= Double(label!.bounds.size.height - label!.font.lineHeight) / (60 / Double(_displayLink!.preferredFramesPerSecond))
             _translate! += 0.1
             if !_reverse {
                 _zoom! += 0.02
